@@ -1,1 +1,1 @@
-hi i am js.
+console.log("Hello JavaScript !")
