@@ -1,0 +1,61 @@
+
+    function mint(
+        address _projectOwner,
+        ProjectMetaData memory _projectData
+    ) external onlyRole(MINTER_ROLE) {
+        tokenId++;
+        Projects[tokenId] = _projectData;
+        _mint(_projectOwner, tokenId);
+    }
+
+    function getCurrentInvestmentRaised(
+        uint256 _tokeId
+    ) external view returns (uint256) {
+        return Projects[_tokeId].currentInvestmentRaised;
+    }
+
+
+    function getAmountToRaise(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].AmountToRaise;
+    }
+
+    function getMinimumTokenPerWeek(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].minimumTokenPerWeek;
+    }
+
+    function getGrowthPercentage(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].GrowthPercentage;
+    }
+
+    function getMinAmountToRaiseInWeek(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].minAmountToRaiseInWeek;
+    }
+
+    function getIsPurchased(uint256 _tokenId) external view returns (bool) {
+        return Projects[_tokenId].isPurchased;
+    }
+
+    function investToProject(
+        uint256 _tokenId,
+        uint256 _AmountInvested
+    ) external onlyRole(INVESTOR_ROLE) {
+        checkProject(_tokenId);
+        Projects[_tokenId].currentInvestmentRaised += _AmountInvested;
+    }
+
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override(ERC721, AccessControl) returns (bool) {
+        return
+            interfaceId == type(IAccessControl).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
+}
