@@ -25,10 +25,6 @@ contract STAFO_NFT is ERC721, AccessControl {
         _grantRole(INVESTOR_ROLE, InvestorContract);
     }
 
-    function checkProject(uint256 _tokenId) internal view {
-        require(Projects[_tokenId].AmountToRaise > 0, "Invalid Project.");
-    }
-
     function mint(
         address _projectOwner,
         ProjectMetaData memory _projectData
