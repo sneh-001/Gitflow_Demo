@@ -86,6 +86,12 @@
 
     </main>
 
+    <h1>Enter something:</h1>
+    <input type="text" id="userInput" placeholder="Type here..."> 
+    <button>Submit</button>
+    <p id="output">
+    </p>
+
     <footer>
         <p>&copy; 2023 My Website</p>
     </footer>
