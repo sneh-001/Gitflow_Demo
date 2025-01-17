@@ -1,89 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Long HTML Code</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 20px;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1em;
-            text-align: center;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline-block;
-            margin-right: 20px;
-        }
-        nav a {
-            color: #333;
-            text-decoration: none;
-        }
-        main {
-            margin-top: 20px;
-        }
-        section {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        footer {
-            background-color: #f0f0f0;
-            padding: 1em;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
 
-    <header>
-        <h1>Welcome to JP'S Website</h1>
-    </header>
+    function mint(
+        address _projectOwner,
+        ProjectMetaData memory _projectData
+    ) external onlyRole(MINTER_ROLE) {
+        tokenId++;
+        Projects[tokenId] = _projectData;
+        _mint(_projectOwner, tokenId);
+    }
 
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Products</a></li>
-        </ul>
-    </nav>
+    function getCurrentInvestmentRaised(
+        uint256 _tokeId
+    ) external view returns (uint256) {
+        return Projects[_tokeId].currentInvestmentRaised;
+    }
 
-    <main>
 
-        <section>
-            <h2>About Me</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </section>
+    function getAmountToRaise(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].AmountToRaise;
+    }
 
-        <section>
-            <h2>My Services</h2>
-            <ul>
-                <li>Web Design</li>
-                <li>Web Development</li>
-                <li>SEO</li>
-                <li>Digital Marketing</li>
-            </ul>
-        </section>
+    function getMinimumTokenPerWeek(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].minimumTokenPerWeek;
+    }
 
-        <section>
-            <h2>Contact Information</h2>
-            <p>
-                <strong>Email:</strong> myemail@example.com<br>
-                <strong>Phone:</strong> +1 123-456-7890<br>
-                <strong>Address:</strong> 123 Main St, Anytown, USA
-            </p>
-        </section>
+    function getGrowthPercentage(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].GrowthPercentage;
+    }
 
-    </main>
+    function getMinAmountToRaiseInWeek(
+        uint256 _tokenId
+    ) external view returns (uint256) {
+        return Projects[_tokenId].minAmountToRaiseInWeek;
+    }
 
-  
+    function getIsPurchased(uint256 _tokenId) external view returns (bool) {
+        return Projects[_tokenId].isPurchased;
+    }
+
+    function investToProject(
+        uint256 _tokenId,
+        uint256 _AmountInvested
+    ) external onlyRole(INVESTOR_ROLE) {
+        checkProject(_tokenId);
+        Projects[_tokenId].currentInvestmentRaised += _AmountInvested;
+    }
+
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override(ERC721, AccessControl) returns (bool) {
+        return
+            interfaceId == type(IAccessControl).interfaceId ||
+            super.supportsInterface(interfaceId);
+    }
+}
