@@ -88,3 +88,8 @@ contract STAFO_NFT is ERC721, AccessControl {
             super.supportsInterface(interfaceId);
     }
 }
+
+const a = 10
+const b = 20
+
+console.log(a+b)
